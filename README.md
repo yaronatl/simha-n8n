@@ -13,8 +13,14 @@ Two n8n workflows for Simha Studio (custom digital invitations), plus the embedd
 - `docs/AIRTABLE_SCHEMA.md`: the six Airtable fields.
 
 ## Setup
-1. Host this folder in a public GitHub repository, then replace `YOUR_GITHUB_USER/YOUR_REPO` in the `simha_studio_info` node with your own raw URL.
-2. In n8n, use Import from File for both JSON files.
-3. Create the credentials (Google Gemini, Airtable token, Brevo API key) and select them on the Gemini, Airtable and Brevo nodes. Set the Airtable base/table IDs and the verified Brevo sender.
-4. Activate the workflows and copy the chat Production URL into `N8N_CHAT_WEBHOOK_URL` in `chat-embed/app.js`.
-5. Serve `chat-embed/` with a local web server to try the chat.
+1. In n8n, use Import from File for both JSON files. The `simha_studio_info` node already reads `knowledge/simha_studio.txt` from this repository.
+2. Create the credentials (Google Gemini, Airtable token, Brevo API key) and select them on the Gemini, Airtable and Brevo nodes. If you use your own Airtable base, change the base/table IDs; put your verified Brevo sender instead of `your-verified-sender@example.com`.
+3. Activate the workflows. The chat Production URL goes into `N8N_CHAT_WEBHOOK_URL` in `chat-embed/app.js` (it currently points to my local n8n).
+4. Serve `chat-embed/` with a local web server to try the chat: `python3 -m http.server 8080 --directory chat-embed`.
+
+Test of the birthday webhook:
+```bash
+curl -X POST http://localhost:5678/webhook/simha-birthday-wishes \
+  -H "Content-Type: application/json" \
+  -d '{"recipient_name":"נועה","sender_name":"יארון","recipient_gender":"נקבה","favorite_topics":"ציור, חתולים ושוקולד","recipient_email":"someone@example.com"}'
+```

@@ -49,7 +49,7 @@
       "name": "Google Gemini Chat Model",
       "credentials": {
         "googlePalmApi": {
-          "id": "REPLACE_WITH_YOUR_CREDENTIAL_ID",
+          "id": "cl7ybocusJ1UV9kC",
           "name": "Google Gemini(PaLM) Api account"
         }
       }
@@ -134,9 +134,10 @@
     "executionOrder": "v1",
     "binaryMode": "separate"
   },
+  "versionId": "7bb559c5-0b26-4bca-9da3-17526a8370d9",
   "meta": {
     "templateCredsSetupCompleted": false
   },
-  "nodeGroups": [],
+  "id": "UJ5n59qrw5bLIKoK",
   "tags": []
 }

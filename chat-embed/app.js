@@ -1,7 +1,8 @@
 import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
-// Production URL of the "When chat message received" trigger (ends with /chat)
-const N8N_CHAT_WEBHOOK_URL = 'https://YOUR-N8N-INSTANCE/webhook/YOUR-CHAT-WEBHOOK-ID/chat';
+// Production URL of the "When chat message received" trigger (ends with /chat).
+// Local n8n here; replace with your hosted instance URL if you deploy it.
+const N8N_CHAT_WEBHOOK_URL = 'http://localhost:5678/webhook/ccb6fd6d-0f25-406e-bd16-d311c516817d/chat';
 
 const init = () => {
   createChat({

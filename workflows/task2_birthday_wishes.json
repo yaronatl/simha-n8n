@@ -57,23 +57,22 @@
       "name": "Google Gemini Chat Model",
       "credentials": {
         "googlePalmApi": {
-          "id": "REPLACE_WITH_YOUR_CREDENTIAL_ID",
+          "id": "cl7ybocusJ1UV9kC",
           "name": "Google Gemini(PaLM) Api account"
         }
       }
     },
     {
       "parameters": {
-        "resource": "record",
         "operation": "create",
         "base": {
           "__rl": true,
-          "value": "appXXXXXXXXXXXXXX",
+          "value": "appTZZofQflAc8N8M",
           "mode": "id"
         },
         "table": {
           "__rl": true,
-          "value": "tblXXXXXXXXXXXXXX",
+          "value": "tbluaiAdLGMtQqDZd",
           "mode": "id"
         },
         "columns": {
@@ -170,7 +169,7 @@
       "name": "Create a record",
       "credentials": {
         "airtableTokenApi": {
-          "id": "REPLACE_WITH_YOUR_CREDENTIAL_ID",
+          "id": "RpRam3NXGR4WCwZR",
           "name": "Airtable Personal Access Token account"
         }
       }
@@ -179,7 +178,7 @@
       "parameters": {
         "subject": "=ברכת יום הולדת מאת {{ $('Webhook').item.json.body.sender_name }}",
         "textContent": "={{ $('Basic LLM Chain').item.json.text }}\n\n---\nהברכה נשלחה אליך דרך Simha Studio בשם {{ $('Webhook').item.json.body.sender_name }}.",
-        "sender": "REPLACE_WITH_VERIFIED_BREVO_SENDER_EMAIL",
+        "sender": "your-verified-sender@example.com",
         "receipients": "={{ $('Webhook').item.json.body.recipient_email }}",
         "additionalFields": {},
         "requestOptions": {}
@@ -194,7 +193,7 @@
       "name": "Send a transactional email",
       "credentials": {
         "sendInBlueApi": {
-          "id": "REPLACE_WITH_YOUR_CREDENTIAL_ID",
+          "id": "IYOFCRkuJhX22TJC",
           "name": "Brevo account"
         }
       }
@@ -278,9 +277,10 @@
     "executionOrder": "v1",
     "binaryMode": "separate"
   },
+  "versionId": "d0e97bb5-ff16-4962-ac33-6d898c25f47a",
   "meta": {
     "templateCredsSetupCompleted": false
   },
-  "nodeGroups": [],
+  "id": "FErZXEaNtM8tSE0N",
   "tags": []
 }
