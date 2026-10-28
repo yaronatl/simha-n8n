@@ -1,0 +1,286 @@
+{
+  "name": "simha_birthday_wishes",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "simha-birthday-wishes",
+        "responseMode": "responseNode",
+        "options": {
+          "allowedOrigins": "*"
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "15b4acb7-e1cd-41c6-993a-7d6c2b2c40f2",
+      "name": "Webhook",
+      "webhookId": "94f39afe-c9a3-41db-aa87-5aa9cccae70d"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=שם מקבל הברכה: {{ $json.body.recipient_name }}\nשם השולח: {{ $json.body.sender_name }}\nמין מקבל הברכה: {{ $json.body.recipient_gender }}\nהנושאים שהוא או היא אוהב/ת: {{ $json.body.favorite_topics }}\n\nכתוב עכשיו את הברכה.",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=## ROLE:\nאתה כותב ברכות יום הולדת מוכשר, חם ומצחיק, שמתמחה בלהפוך כמה מילים על אדם לברכה אישית שמרגישה כתובה במיוחד בשבילו.\n\n## TASK:\nכתוב ברכת יום הולדת בעברית על סמך הפרטים שתקבל: שם מקבל/ת הברכה, שם השולח/ת, מין מקבל הברכה, והנושאים שהוא/היא אוהב/ת.\n1. לשון: אם המין הוא \"זכר\" – פנה אליו בלשון זכר (אתה, שלך, תהיה, תמשיך). אם המין הוא \"נקבה\" – פנה אליה בלשון נקבה (את, שלך, תהיי, תמשיכי). שים לב לפעלים, לכינויים ולתארים לאורך כל הברכה, ואל תערבב לשונות.\n2. תוכן: שלב בברכה לפחות שניים מהנושאים האהובים בצורה יצירתית, עם דימויים, משחקי מילים קלילים וברכות שקשורות אליהם, ולא רק רשימה של הנושאים.\n3. קהל: אם מהנושאים נראה שמדובר בילד/ה (משחקים, מצוירים, גן, כיתה וכו') – כתוב בשפה פשוטה, צבעונית ושובבה. אם נראה שמדובר במבוגר/ת – כתוב בטון חם, מכבד ומחויך.\n4. סטייל: חם, שמח ומעט הומוריסטי, עם נימה אישית. מותר עד 3 אימוג'ים מתאימים. אורך: 4 עד 7 משפטים קצרים.\n5. פתח עם \"[שם מקבל הברכה] היקר או היקרה,\" והתאם לפי המין, וסיים עם איחול ועם החתימה \"באהבה, [שם השולח]\".\n\n## DETAILS:\nהחזר אך ורק את טקסט הברכה עצמו, בלי הקדמה, בלי הסברים ובלי כותרות או סימוני Markdown. אל תמציא עובדות על האדם מעבר לנושאים שנמסרו."
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        240,
+        0
+      ],
+      "id": "f6036a8f-2f9d-4ab6-b619-995e350866a2",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-3.5-flash-lite",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        208
+      ],
+      "id": "afd79d8d-6d74-4385-a8dd-70358bd63f6d",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "REPLACE_WITH_YOUR_CREDENTIAL_ID",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "record",
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appXXXXXXXXXXXXXX",
+          "mode": "id"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblXXXXXXXXXXXXXX",
+          "mode": "id"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "recipient_name": "={{ $('Webhook').item.json.body.recipient_name }}",
+            "sender_name": "={{ $('Webhook').item.json.body.sender_name }}",
+            "recipient_gender": "={{ $('Webhook').item.json.body.recipient_gender }}",
+            "favorite_topics": "={{ $('Webhook').item.json.body.favorite_topics }}",
+            "ai_greeting": "={{ $('Basic LLM Chain').item.json.text }}",
+            "recipient_email": "={{ $('Webhook').item.json.body.recipient_email }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "recipient_name",
+              "displayName": "recipient_name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "sender_name",
+              "displayName": "sender_name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "recipient_gender",
+              "displayName": "recipient_gender",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "favorite_topics",
+              "displayName": "favorite_topics",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "ai_greeting",
+              "displayName": "ai_greeting",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "recipient_email",
+              "displayName": "recipient_email",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        560,
+        0
+      ],
+      "id": "5f9406fd-fd76-404e-86e5-1a4302bdb26a",
+      "name": "Create a record",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "REPLACE_WITH_YOUR_CREDENTIAL_ID",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "subject": "=ברכת יום הולדת מאת {{ $('Webhook').item.json.body.sender_name }}",
+        "textContent": "={{ $('Basic LLM Chain').item.json.text }}\n\n---\nהברכה נשלחה אליך דרך Simha Studio בשם {{ $('Webhook').item.json.body.sender_name }}.",
+        "sender": "REPLACE_WITH_VERIFIED_BREVO_SENDER_EMAIL",
+        "receipients": "={{ $('Webhook').item.json.body.recipient_email }}",
+        "additionalFields": {},
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-base.sendInBlue",
+      "typeVersion": 1,
+      "position": [
+        784,
+        0
+      ],
+      "id": "727869d7-95b9-403f-9e42-41002bd77e4e",
+      "name": "Send a transactional email",
+      "credentials": {
+        "sendInBlueApi": {
+          "id": "REPLACE_WITH_YOUR_CREDENTIAL_ID",
+          "name": "Brevo account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ {\n  \"status\": \"success\",\n  \"message\": \"הברכה נוצרה ונשלחת ברגעים אלה אל \" + $('Webhook').item.json.body.recipient_name,\n  \"greeting\": $('Basic LLM Chain').item.json.text,\n  \"recipient_email\": $('Webhook').item.json.body.recipient_email\n} }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        1008,
+        0
+      ],
+      "id": "1780427a-b59c-4965-8949-862db510f588",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Create a record",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a record": {
+      "main": [
+        [
+          {
+            "node": "Send a transactional email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a transactional email": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "nodeGroups": [],
+  "tags": []
+}

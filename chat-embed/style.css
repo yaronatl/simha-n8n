@@ -1,0 +1,65 @@
+/* Simha Studio - chat page */
+:root {
+  direction: rtl;
+
+  /* orange theme */
+  --chat--color--primary: #ff8c00;
+  --chat--color--primary-shade-50: #f08000;
+  --chat--color--primary--shade-100: #e07400;
+  --chat--color--secondary: #ff8c00;
+  --chat--color-secondary-shade-50: #f08000;
+  --chat--color-white: #fff;
+  --chat--color-light: #f2f4f8;
+  --chat--color-light-shade-50: #e6e9f1;
+  --chat--color-light-shade-100: #c2c5cc;
+  --chat--color-medium: #d2d4d9;
+  --chat--color-dark: #101330;
+  --chat--color-disabled: #d2d4d9;
+  --chat--color-typing: #404040;
+
+  --chat--header--background: #ff8c00;
+  --chat--header--color: #fff;
+
+  --chat--spacing: 1rem;
+  --chat--border-radius: 0.25rem;
+  --chat--transition-duration: 0.15s;
+  --chat--font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu,
+    Cantarell, 'Helvetica Neue', Arial, sans-serif;
+
+  --chat--window--width: 400px;
+  --chat--window--height: 600px;
+  --chat--window--bottom: var(--chat--spacing);
+  --chat--window--right: var(--chat--spacing);
+  --chat--window--z-index: 9999;
+  --chat--window--border: 1px solid var(--chat--color-light-shade-50);
+  --chat--window--border-radius: var(--chat--border-radius);
+  --chat--window--margin-bottom: var(--chat--spacing);
+}
+
+/* make sure the header stays orange across widget versions */
+.n8n-chat .chat-header,
+.chat-window .chat-header,
+.chat-header {
+  background: #ff8c00 !important;
+  color: #fff !important;
+}
+
+/* RTL: flip the send arrow */
+.n8n-chat { direction: rtl; }
+.n8n-chat .chat-inputs-controls { transform: rotate(180deg); }
+
+/* page */
+body {
+  margin: 0;
+  font-family: Arial, 'Segoe UI', sans-serif;
+  background: #fffaf3;
+  color: #2b2b2b;
+}
+.page {
+  max-width: 720px;
+  margin: 4rem auto;
+  padding: 0 1.25rem;
+  line-height: 1.7;
+}
+.page h1 { color: #ff8c00; margin-bottom: 0.25rem; }
+.tagline { font-size: 1.2rem; font-weight: bold; margin-top: 0; }
